@@ -9,6 +9,10 @@ edition = "2021"
 name = "plot-fig"
 path = "src/plot_fig.rs"
 
+[[bin]]
+name = "demo"
+path = "src/demo.rs"
+
 [dependencies]
 cairo-rs = "0.17.10"
 gio = "0.17.10"
