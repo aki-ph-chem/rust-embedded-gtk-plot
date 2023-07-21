@@ -17,6 +17,10 @@ path = "src/demo.rs"
 name = "q_func"
 path = "src/quadratic_func.rs"
 
+[[bin]]
+name = "q_func_param"
+path = "src/quadratic_func_param.rs"
+
 [dependencies]
 cairo-rs = "0.17.10"
 gio = "0.17.10"
