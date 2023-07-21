@@ -4,6 +4,10 @@ use gtk::prelude::*;
 use plotters::prelude::*;
 use plotters_cairo::CairoBackend;
 
+fn q_func(x: f32) -> f32 {
+    x.powi(2)
+}
+
 // backendに対してplot
 fn plot_q_func(backend: CairoBackend) -> Result<(), Box<dyn error::Error>> {
         let root = backend.into_drawing_area();
@@ -15,17 +19,14 @@ fn plot_q_func(backend: CairoBackend) -> Result<(), Box<dyn error::Error>> {
             .x_label_area_size(30)
             .y_label_area_size(30)
             .build_cartesian_2d(-1f32..1f32, -0.1f32..1f32)?;
-
-        chart.configure_mesh().draw().unwrap();
-
+        chart.configure_mesh().draw()?;
         chart
             .draw_series(LineSeries::new(
-                    (-50..=50).map(|x| x as f32 / 50.0).map(|x| (x, x * x)),
+                    (-50..=50).map(|x| x as f32 / 50.0).map(|x| (x, q_func(x))),
                     &RED,
                     )).unwrap()
             .label("y = x^2")
             .legend(|(x, y)| PathElement::new(vec![(x, y), (x + 20, y)], &RED));
-
         chart
             .configure_series_labels()
             .background_style(&WHITE.mix(0.8))
