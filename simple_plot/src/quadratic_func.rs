@@ -4,23 +4,8 @@ use gtk::prelude::*;
 use plotters::prelude::*;
 use plotters_cairo::CairoBackend;
 
-
-// gtk windowの中にplotを埋め込む
-fn build_ui(app: &gtk::Application) {
-    let ui = include_str!("ui/q_func.ui");
-    let builder = gtk::Builder::from_string(ui);
-    let window: gtk::Window = builder.object("window").expect("Error: window");
-    window.set_application(Some(app));
-
-    let drawing_area: gtk::DrawingArea = builder.object("draw")
-        .expect("Error: draw");
-
-    drawing_area.connect_draw(move |widget, cr| {
-        let width = widget.allocated_width();
-        let height = widget.allocated_height();
-
-        let backend = CairoBackend::new(cr, (width as u32, height as u32))
-            .unwrap();
+// backendに対してplot
+fn plot_q_func(backend: CairoBackend) {
         let root = backend.into_drawing_area();
         root.fill(&WHITE).unwrap();
         let mut chart = ChartBuilder::on(&root)
@@ -48,7 +33,26 @@ fn build_ui(app: &gtk::Application) {
             .unwrap();
 
         root.present().unwrap();
+}
 
+// gtk windowの中にplotを埋め込む
+fn build_ui(app: &gtk::Application) {
+    let ui = include_str!("ui/q_func.ui");
+    let builder = gtk::Builder::from_string(ui);
+    let window: gtk::Window = builder.object("window").expect("Error: window");
+    window.set_application(Some(app));
+
+    let drawing_area: gtk::DrawingArea = builder.object("draw")
+        .expect("Error: draw");
+
+    drawing_area.connect_draw(move |widget, cr| {
+        let width = widget.allocated_width();
+        let height = widget.allocated_height();
+
+        let backend = CairoBackend::new(cr, (width as u32, height as u32))
+            .unwrap();
+
+        plot_q_func(backend);
         Inhibit(false)
     });
 
