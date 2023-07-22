@@ -9,6 +9,10 @@ edition = "2021"
 name = "plot_slider"
 path = "src/plot_slider.rs"
 
+[[bin]]
+name = "plot_slider_range"
+path = "src/plot_slider_range.rs"
+
 [dependencies]
 cairo-rs = "0.17.10"
 gio = "0.17.10"
