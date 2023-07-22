@@ -41,7 +41,6 @@ impl QFunc {
             .margin(5)
             .x_label_area_size(30)
             .y_label_area_size(30)
-            //.build_cartesian_2d(-2f64..2f64, -4.2f64..4.2f64)?;
             .build_cartesian_2d(x_min..x_max, y_min..y_max)?;
         chart.configure_mesh().draw()?;
         chart
@@ -115,10 +114,10 @@ fn build_ui(app: &gtk::Application) {
     // パラメータが変化した時の再描画処理
     let handle_change = 
         |control: &gtk::Scale, action: Box<dyn Fn(&mut QFunc) -> &mut f64 + 'static>| {
-            let app_state_state = app_state.clone(); 
+            let app_state_clone = app_state.clone(); 
             let drawing_area = drawing_area.clone();
             control.connect_value_changed(move |target| {
-                let mut state = app_state_state.borrow_mut();
+                let mut state = app_state_clone.borrow_mut();
                 *action(&mut *state) = target.value();
                 drawing_area.queue_draw();
             });
@@ -129,18 +128,20 @@ fn build_ui(app: &gtk::Application) {
 
     // x,yの範囲をGtkEntryから入力した数値で変更
     let handle_range =
-        |control: &gtk::Entry| {
-            let app_state_state = app_state.clone(); 
+        |control: &gtk::Entry, action: Box<dyn Fn(&mut QFunc) -> &mut f64 + 'static>| {
+            let app_state_clone = app_state.clone(); 
             let drawing_area = drawing_area.clone();
             button_redraw.connect_clicked(glib::clone!(@weak control => move |_| {
+                let mut state = app_state_clone.borrow_mut();
                 let value = control.text().parse::<f64>().expect("Error: invalid");
-                eprintln!("vlue = {}", value);
+                *action(&mut *state) = value;
+                drawing_area.queue_draw();
             }));
         };
-    handle_range(&entry_x_min);
-    handle_range(&entry_x_max);
-    handle_range(&entry_y_min);
-    handle_range(&entry_y_max);
+    handle_range(&entry_x_min, Box::new(|s| &mut s.range.x_min));
+    handle_range(&entry_x_max, Box::new(|s| &mut s.range.x_max));
+    handle_range(&entry_y_min, Box::new(|s| &mut s.range.y_min));
+    handle_range(&entry_y_max, Box::new(|s| &mut s.range.y_max));
 
     window.show_all();
 } 
