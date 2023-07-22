@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Generated with glade 3.40.0 -->
+<interface>
+  <requires lib="gtk+" version="3.24"/>
+  <object class="GtkAdjustment" id="a_adjust">
+    <property name="lower">-1</property>
+    <property name="upper">1</property>
+    <property name="step-increment">0.10</property>
+    <property name="page-increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="b_adjust">
+    <property name="lower">-1</property>
+    <property name="upper">1</property>
+    <property name="step-increment">0.10</property>
+    <property name="page-increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="c_adjust">
+    <property name="lower">-1</property>
+    <property name="upper">1</property>
+    <property name="step-increment">0.10</property>
+    <property name="page-increment">10</property>
+  </object>
+  <object class="GtkWindow" id="window">
+    <property name="width-request">650</property>
+    <property name="can-focus">False</property>
+    <child>
+      <object class="GtkBox" id="vbox">
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <property name="orientation">vertical</property>
+        <child>
+          <!-- n-columns=2 n-rows=3 -->
+          <object class="GtkGrid" id="grid_control">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <child>
+              <object class="GtkLabel" id="a_coeff">
+                <property name="width-request">40</property>
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="label" translatable="yes">a</property>
+              </object>
+              <packing>
+                <property name="left-attach">0</property>
+                <property name="top-attach">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="b_coeff">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="label" translatable="yes">b</property>
+              </object>
+              <packing>
+                <property name="left-attach">0</property>
+                <property name="top-attach">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="c_coeff">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="label" translatable="yes">c</property>
+              </object>
+              <packing>
+                <property name="left-attach">0</property>
+                <property name="top-attach">2</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkScale" id="a_control">
+                <property name="width-request">350</property>
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="adjustment">a_adjust</property>
+                <property name="round-digits">1</property>
+              </object>
+              <packing>
+                <property name="left-attach">1</property>
+                <property name="top-attach">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkScale" id="b_control">
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="adjustment">b_adjust</property>
+                <property name="round-digits">1</property>
+              </object>
+              <packing>
+                <property name="left-attach">1</property>
+                <property name="top-attach">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkScale" id="c_control">
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="adjustment">c_adjust</property>
+                <property name="round-digits">1</property>
+              </object>
+              <packing>
+                <property name="left-attach">1</property>
+                <property name="top-attach">2</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkDrawingArea" id="area_plot">
+            <property name="width-request">600</property>
+            <property name="height-request">600</property>
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="margin-left">15</property>
+            <property name="margin-right">15</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>
