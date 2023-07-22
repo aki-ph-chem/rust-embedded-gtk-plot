@@ -131,11 +131,19 @@ fn build_ui(app: &gtk::Application) {
         |control: &gtk::Entry, action: Box<dyn Fn(&mut QFunc) -> &mut f64 + 'static>| {
             let app_state_clone = app_state.clone(); 
             let drawing_area = drawing_area.clone();
+
             button_redraw.connect_clicked(glib::clone!(@weak control => move |_| {
                 let mut state = app_state_clone.borrow_mut();
-                let value = control.text().parse::<f64>().expect("Error: invalid");
-                *action(&mut *state) = value;
-                drawing_area.queue_draw();
+                match control.text().parse::<f64>() {
+                    Ok(value) =>{
+                        *action(&mut *state) = value;
+                        drawing_area.queue_draw();
+                    },
+                    Err(error) => {
+                        eprintln!("Error {}", error);
+                    }
+                };
+
             }));
         };
     handle_range(&entry_x_min, Box::new(|s| &mut s.range.x_min));
