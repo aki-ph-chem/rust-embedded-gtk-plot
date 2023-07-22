@@ -114,13 +114,11 @@ fn build_ui(app: &gtk::Application) {
     // パラメータが変化した時の再描画処理
     let handle_change = 
         |control: &gtk::Scale, action: Box<dyn Fn(&mut QFunc) -> &mut f64 + 'static>| {
-            let app_state_clone = app_state.clone(); 
-            let drawing_area = drawing_area.clone();
-            control.connect_value_changed(move |target| {
-                let mut state = app_state_clone.borrow_mut();
+            control.connect_value_changed(glib::clone!(@weak app_state, @weak drawing_area => move |target| {
+                let mut state = app_state.borrow_mut();
                 *action(&mut *state) = target.value();
                 drawing_area.queue_draw();
-            });
+            }));
         };
     handle_change(&a_control, Box::new(|s| &mut s.a));
     handle_change(&b_control, Box::new(|s| &mut s.b));
@@ -129,11 +127,8 @@ fn build_ui(app: &gtk::Application) {
     // x,yの範囲をGtkEntryから入力した数値で変更
     let handle_range =
         |control: &gtk::Entry, action: Box<dyn Fn(&mut QFunc) -> &mut f64 + 'static>| {
-            let app_state_clone = app_state.clone(); 
-            let drawing_area = drawing_area.clone();
-
-            button_redraw.connect_clicked(glib::clone!(@weak control => move |_| {
-                let mut state = app_state_clone.borrow_mut();
+            button_redraw.connect_clicked(glib::clone!(@weak control, @weak drawing_area, @weak app_state => move |_| {
+                let mut state = app_state.borrow_mut();
                 match control.text().parse::<f64>() {
                     Ok(value) =>{
                         *action(&mut *state) = value;
