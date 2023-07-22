@@ -9,3 +9,4 @@ Gtkのwindowにplotを埋め込む
 - Glade: glade-3.40.0+r14+g1fbca367-2 
 
 ## ss1 [simple_plot](./simple_plot) 
+## ss2 [plot_with_slider](./plot_with_slider)
