@@ -13,4 +13,8 @@ path = "src/func_ptr.rs"
 name = "return_closure"
 path = "src/return_closure.rs"
 
+[[bin]]
+name = "range_iter"
+path = "src/range_iter.rs"
+
 [dependencies]
