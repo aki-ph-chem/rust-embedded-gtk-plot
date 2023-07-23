@@ -8,11 +8,32 @@ fn q_func(x: f32) -> f32 {
     x.powi(2)
 }
 
+struct Range {
+    x_ini: f32,
+    x_fin: f32,
+    step: f32,
+}
+
+impl Iterator for Range {
+    type Item = f32;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        if self.x_ini <= self.x_fin {
+            let value = self.x_ini;
+            self.x_ini += self.step;
+            Some(value)
+        } else {
+            None
+        }
+    }
+}
+
+
 // backendに対してplot
 fn plot_q_func(backend: CairoBackend) -> Result<(), Box<dyn error::Error>> {
         let root = backend.into_drawing_area();
         root.fill(&WHITE)?;
-        
+
         let mut chart = ChartBuilder::on(&root)
             .caption("y=x^2", ("sans-serif", 50).into_font())
             .margin(5)
@@ -20,9 +41,11 @@ fn plot_q_func(backend: CairoBackend) -> Result<(), Box<dyn error::Error>> {
             .y_label_area_size(30)
             .build_cartesian_2d(-1f32..1f32, -0.1f32..1f32)?;
         chart.configure_mesh().draw()?;
+
+        let range = Range{x_ini: -1.0, x_fin: 1.0, step: 0.01};
         chart
             .draw_series(LineSeries::new(
-                    (-50..=50).map(|x| x as f32 / 50.0).map(|x| (x, q_func(x))),
+                    range.map(|x| (x, q_func(x))),
                     &RED,
                     )).unwrap()
             .label("y = x^2")
