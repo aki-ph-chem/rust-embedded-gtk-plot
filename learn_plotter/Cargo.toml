@@ -9,6 +9,10 @@ edition = "2021"
 name = "plot_1"
 path = "src/plot_1.rs"
 
+[[bin]]
+name = "many_plot"
+path = "src/many_plot.rs"
+
 [dependencies]
 cairo-rs = "0.17.10"
 gio = "0.17.10"
