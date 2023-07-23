@@ -9,4 +9,8 @@ edition = "2021"
 name = "func_ptr"
 path = "src/func_ptr.rs"
 
+[[bin]]
+name = "return_closure"
+path = "src/return_closure.rs"
+
 [dependencies]
