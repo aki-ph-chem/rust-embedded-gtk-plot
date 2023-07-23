@@ -7,6 +7,26 @@ use plotters_cairo::CairoBackend;
 use std::rc::Rc;
 use std::cell::RefCell;
 
+struct Range {
+    x_current: f64,
+    x_fin: f64,
+    step: f64,
+}
+
+impl Iterator for Range {
+    type Item = f64;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        if self.x_current <= self.x_fin {
+            let value = self.x_current;
+            self.x_current += self.step;
+            Some(value)
+        } else {
+            None
+        }
+    }
+}
+
 #[derive(Debug,Clone,Copy)]
 struct PlotRange {
     x_min: f64,
@@ -43,9 +63,11 @@ impl QFunc {
             .y_label_area_size(30)
             .build_cartesian_2d(x_min..x_max, y_min..y_max)?;
         chart.configure_mesh().draw()?;
+
+        let range = Range{x_current: x_min, x_fin: x_max, step: 0.1 };
         chart
             .draw_series(LineSeries::new(
-                    (-100..=100).map(|x| x as f64 / 50.0).map(|x| (x, self.q_func(x))),
+                    range.map(|x| (x, self.q_func(x))),
                     &RED,
                     )).unwrap()
             .label("y = x^2")
