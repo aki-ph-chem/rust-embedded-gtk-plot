@@ -26,6 +26,10 @@ path = "src/basics/line.rs"
 name = "mesh"
 path = "src/basics/mesh.rs"
 
+[[bin]]
+name = "axes"
+path = "src/basics/axes.rs"
+
 [dependencies]
 cairo-rs = "0.17.10"
 gio = "0.17.10"
