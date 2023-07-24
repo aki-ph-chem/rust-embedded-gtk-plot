@@ -31,8 +31,6 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut chart = ChartBuilder::on(&drawing_area)
         .build_cartesian_2d(0..100, 0..100)?;
 
-    chart.configure_mesh().draw()?;
-
     chart
         .draw_series(LineSeries::new(
                 (0..100).map(|x| (x, 100 - x)), &RED),
