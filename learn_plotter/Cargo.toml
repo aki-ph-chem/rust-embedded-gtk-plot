@@ -42,6 +42,10 @@ path = "src/basics/line_series.rs"
 name = "legend"
 path = "src/basics/legend.rs"
 
+[[bin]]
+name = "scatter_pic"
+path = "src/basics/scatter.rs"
+
 [dependencies]
 cairo-rs = "0.17.10"
 gio = "0.17.10"
