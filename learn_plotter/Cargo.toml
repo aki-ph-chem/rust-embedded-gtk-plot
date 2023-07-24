@@ -34,6 +34,10 @@ path = "src/basics/axes.rs"
 name = "title"
 path = "src/basics/title.rs"
 
+[[bin]]
+name = "line_series"
+path = "src/basics/line_series.rs"
+
 [dependencies]
 cairo-rs = "0.17.10"
 gio = "0.17.10"
