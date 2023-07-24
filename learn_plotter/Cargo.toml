@@ -17,6 +17,11 @@ path = "src/many_plot.rs"
 name = "scatter"
 path = "src/scatter.rs"
 
+# basics ごくごく基本的なこと
+[[bin]]
+name = "line"
+path = "src/basics/line.rs"
+
 [dependencies]
 cairo-rs = "0.17.10"
 gio = "0.17.10"
