@@ -13,6 +13,10 @@ path = "src/plot_1.rs"
 name = "many_plot"
 path = "src/many_plot.rs"
 
+[[bin]]
+name = "scatter"
+path = "src/scatter.rs"
+
 [dependencies]
 cairo-rs = "0.17.10"
 gio = "0.17.10"
