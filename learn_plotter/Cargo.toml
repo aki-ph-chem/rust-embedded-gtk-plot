@@ -46,6 +46,11 @@ path = "src/basics/legend.rs"
 name = "scatter_pic"
 path = "src/basics/scatter.rs"
 
+# 3d
+[[bin]]
+name = "axes_3d"
+path = "src/3d_plot/axes_3d.rs"
+
 [dependencies]
 cairo-rs = "0.17.10"
 gio = "0.17.10"
