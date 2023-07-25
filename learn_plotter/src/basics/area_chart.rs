@@ -33,11 +33,13 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         .set_label_area_size(LabelAreaPosition::Bottom, 40)
         .caption("Area Chart", ("sana-serif", 40))
         .build_cartesian_2d(0..10, 0..50)?;
+    chart.configure_mesh().draw()?;
 
     let data = [25, 37, 15, 32, 45, 33, 32, 10, 29, 0, 21];
     chart
         .draw_series(
             AreaSeries::new(
+                //横軸が0 以上の値を表示する
                 (0..).zip(data.iter().map(|x| *x)),
                 0,
                 &RED.mix(0.2)).border_style(&RED)
