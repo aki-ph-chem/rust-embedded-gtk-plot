@@ -59,6 +59,10 @@ path = "src/3d_plot/line_3d.rs"
 name = "scatter_3d"
 path = "src/3d_plot/scatter_3d.rs"
 
+[[bin]]
+name = "surface_3d"
+path = "src/3d_plot/surface_3d.rs"
+
 [dependencies]
 cairo-rs = "0.17.10"
 gio = "0.17.10"
