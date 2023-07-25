@@ -17,6 +17,10 @@ path = "src/many_plot.rs"
 name = "scatter"
 path = "src/scatter.rs"
 
+[[bin]]
+name = "realtime_1"
+path = "src/realtime_1.rs"
+
 # basics ごくごく基本的なこと
 [[bin]]
 name = "line"
