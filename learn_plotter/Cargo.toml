@@ -46,6 +46,10 @@ path = "src/basics/legend.rs"
 name = "scatter_pic"
 path = "src/basics/scatter.rs"
 
+[[bin]]
+name = "area_chart"
+path = "src/basics/area_chart.rs"
+
 # 3d
 [[bin]]
 name = "axes_3d"
