@@ -50,6 +50,10 @@ path = "src/basics/scatter.rs"
 name = "area_chart"
 path = "src/basics/area_chart.rs"
 
+[[bin]]
+name = "histogram"
+path = "src/basics/histogram.rs"
+
 # 3d
 [[bin]]
 name = "axes_3d"
