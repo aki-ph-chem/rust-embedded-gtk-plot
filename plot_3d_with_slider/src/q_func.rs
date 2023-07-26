@@ -68,17 +68,25 @@ impl AppState {
             .margin(3)
             .caption(formula_caption, ("sans-serif", 25))
             .build_cartesian_3d(x_min..x_max, y_min..y_max, z_min..z_max)?;
+
+        // 視点を変更する
+        chart.with_projection(|mut pb| {
+            pb.pitch = self.pitch;
+            pb.yaw = self.yaw;
+            pb.scale = self.scale;
+            pb.into_matrix()
+        });
         chart.configure_axes().draw()?;
 
-    // plotの描画処理
-    let range_x = Range{x_current: -1.7, x_fin: 1.7, step: 0.1};
-    let range_y = Range{x_current: -1.7, x_fin: 1.7, step: 0.1};
-    chart.draw_series(
-        SurfaceSeries::xoz(
-            range_x,
-            range_y,
-            |x: f64, y: f64| self.q_func(x,y) ).style(&BLUE.mix(0.2))
-                     )?;
+        // plotの描画処理
+        let range_x = Range{x_current: -1.7, x_fin: 1.7, step: 0.1};
+        let range_y = Range{x_current: -1.7, x_fin: 1.7, step: 0.1};
+        chart.draw_series(
+            SurfaceSeries::xoz(
+                range_x,
+                range_y,
+                |x: f64, y: f64| self.q_func(x,y) ).style(&BLUE.mix(0.2))
+            )?;
 
         root.present()?;
         Ok(())
@@ -108,9 +116,14 @@ fn build_ui(app: &gtk::Application) {
 
     // パラメータを初期化する
     let app_state = Rc::new(RefCell::new(AppState{
+        /*
         pitch: pitch_control.value(),
         yaw: yaw_control.value(),
         scale: scale_control.value(),
+        */
+        pitch: 0.3,
+        yaw: 0.5,
+        scale: 1.0,
         plot_range: PlotRange {
             x_min: -3.0,
             x_max: 3.0,
@@ -163,6 +176,19 @@ fn build_ui(app: &gtk::Application) {
     handle_plot_range(&entry_y_max, Box::new(|s| &mut s.plot_range.y_max));
     handle_plot_range(&entry_z_min, Box::new(|s| &mut s.plot_range.z_min));
     handle_plot_range(&entry_z_max, Box::new(|s| &mut s.plot_range.z_max));
+
+    let handle_perspective = 
+        |control: &gtk::Scale, action: Box<dyn Fn(&mut AppState) -> &mut f64 + 'static>| {
+            control.connect_value_changed(glib::clone!(@weak app_state, @weak drawing_area => move |target| {
+                let mut state = app_state.borrow_mut();
+                *action(&mut *state) = target.value();
+                drawing_area.queue_draw();
+            }));
+        };
+    handle_perspective(&pitch_control, Box::new(|s| &mut s.pitch));
+    handle_perspective(&yaw_control, Box::new(|s| &mut s.yaw));
+    handle_perspective(&scale_control, Box::new(|s| &mut s.scale));
+
 
     window.show_all();
 }
