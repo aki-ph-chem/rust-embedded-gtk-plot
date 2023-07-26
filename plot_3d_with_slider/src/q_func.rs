@@ -140,6 +140,30 @@ fn build_ui(app: &gtk::Application) {
         Inhibit(false)
     });
 
+    // x,yの範囲をGtkEntryから入力した数値で変更
+    let handle_plot_range =
+        |control: &gtk::Entry, action: Box<dyn Fn(&mut AppState) -> &mut f64 + 'static>| {
+            button_redraw.connect_clicked(glib::clone!(@weak control, @weak drawing_area, @weak app_state => move |_| {
+                let mut state = app_state.borrow_mut();
+                match control.text().parse::<f64>() {
+                    Ok(value) =>{
+                        *action(&mut *state) = value;
+                        drawing_area.queue_draw();
+                    },
+                    Err(error) => {
+                        eprintln!("Error {}", error);
+                    }
+                };
+
+            }));
+        };
+    handle_plot_range(&entry_x_min, Box::new(|s| &mut s.plot_range.x_min));
+    handle_plot_range(&entry_x_max, Box::new(|s| &mut s.plot_range.x_max));
+    handle_plot_range(&entry_y_min, Box::new(|s| &mut s.plot_range.y_min));
+    handle_plot_range(&entry_y_max, Box::new(|s| &mut s.plot_range.y_max));
+    handle_plot_range(&entry_z_min, Box::new(|s| &mut s.plot_range.z_min));
+    handle_plot_range(&entry_z_max, Box::new(|s| &mut s.plot_range.z_max));
+
     window.show_all();
 }
 
