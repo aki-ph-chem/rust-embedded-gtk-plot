@@ -10,6 +10,7 @@ Gtkのwindowにplotを埋め込む
 
 ## ss1 [simple_plot](./simple_plot): とりあえずplotする
 ## ss2 [plot_with_slider](./plot_with_slider): GUIからパラメータを操作できるようにする。
+## ss3 [plot_3d_with_slider](./plot_3d_with_slider): GUIから3dのプロットのパラメータを操作できるようにする
 
 ## Appendix
 ### [appendix](./appendix) ここで出てきた手法のメモ 
