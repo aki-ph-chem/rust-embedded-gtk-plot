@@ -9,6 +9,10 @@ edition = "2021"
 name = "q_func"
 path = "src/q_func.rs" 
 
+[[bin]]
+name = "q_func_2"
+path = "src/q_func_2.rs" 
+
 [dependencies]
 cairo-rs = "0.17.10"
 gio = "0.17.10"
